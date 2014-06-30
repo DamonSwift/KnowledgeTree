@@ -219,11 +219,11 @@ var demoMsg   = {
   asyncAllOver: "后台异步加载完毕",
   asyncAll: "已经异步加载完毕，不再重新加载",
   expandAll: "已经异步加载完毕，使用 expandAll 方法"
-}
+};
 var curStatus     = "init";
 var curAsyncCount = 0;
-var asyncForAll   = false,
-var goAsync       = false;
+var asyncForAll   = false;
+var goAsync = false;
 
 //Callbacks
 
@@ -421,8 +421,8 @@ function add(event) {
 //---------------------------
 function edit() {
   var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-  nodes = zTree.getSelectedNodes(),
-  treeNode = nodes[0];
+  nodes     = zTree.getSelectedNodes(),
+  treeNode  = nodes[0];
   if (nodes.length == 0) {
     alert("请先选择一个节点");
     return;
@@ -594,6 +594,12 @@ function reset() {
   asyncForAll = false;
   goAsync = false;
   $("#demoMsg").text("");
+  //后台数据库重置
+  $.post("createTables_addTestRecoed.php", function(data) {
+    alert(data);
+  });
+
+  //前台UI重置
   $.fn.zTree.init($("#treeDemo"), setting);
 }
 
