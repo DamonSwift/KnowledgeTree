@@ -61,10 +61,10 @@
 
   //添加测试树
   $sql = "INSERT INTO $tabKnowTree (TreeName, Domain, CreateTime, UpdateTime, Comment)
-          VALUES ('第二炮兵知识树', '中文概念库', '" . date("Y-m-d") . "', '" . date("Y-m-d H:i:s") . "', '将第二炮兵的知识聚集在这儿')";
+          VALUES ('第二炮兵知识树', '中文概念库', '" . date("Y-m-d") . "', CURRENT_TIMESTAMP, '将第二炮兵的知识聚集在这儿')";
   $result = mysql_query($sql,$conn);
   $sql = "INSERT INTO $tabKnowTree (TreeName, Domain, CreateTime, UpdateTime, Comment)
-          VALUES ('常识知识', '中文概念库', '" . date("Y-m-d") . "', '" . date("Y-m-d H:i:s") . "', '用于语言理解中知识运用')";
+          VALUES ('常识知识', '中文概念库', '" . date("Y-m-d") . "', CURRENT_TIMESTAMP, '用于语言理解中知识运用')";
   $result = mysql_query($sql,$conn);
 
   //添加测试节点

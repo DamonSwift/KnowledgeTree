@@ -416,7 +416,7 @@ function addKnowledgeTree(event) {
   newTree.id = treeNode.name;
   newTree.name = treeNode.name;
   //写入数据库，KnowledgeTree表格
-  $.post("saveKnowTree_MySQL.php", newTree);
+  $.post("setNewKnowTree_MySQL.php", newTree);
 };
 
 //---------------------------
@@ -444,7 +444,10 @@ function addKnowledgeNode(event) {
       name: "NewKnowledgeNode" + (newTreeCount++)
     };
     treeNode = zTree.addNodes(treeNode, newNode);
-    zTree.editName(treeNode[0]);    
+    zTree.editName(treeNode[0]);
+    // $.post('setNewKnowNode_MySQL.php', param1: 'value1', function(data, textStatus, xhr) {
+    //   /*optional stuff to do after success */
+    // });
   }
 };
 
@@ -475,13 +478,14 @@ function edit() {
 //Comment           : 
 //---------------------------
 function remove(e) {
-  var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree"),
-  nodes     = zTree.getSelectedNodes(),
-  treeNode  = nodes[0];
+  var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree");
+  var nodes = zTree.getSelectedNodes();
+  var treeNode = nodes[0];
   if (nodes.length == 0) {
     return;
   }
-  zTree.removeNode(treeNode, callbackFlag);
+  $.post('removeNode_MySQL.php', { id: treeNode.id, clearChildrenOnly: false });
+  zTree.removeNode(treeNode);
 };
 
 //---------------------------
@@ -494,11 +498,12 @@ function remove(e) {
 //---------------------------
 function clearChildren(e) {
   var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree"),
-  nodes     = zTree.getSelectedNodes(),
-  treeNode  = nodes[0];
+  nodes = zTree.getSelectedNodes(),
+  treeNode = nodes[0];
   if (nodes.length == 0 || !nodes[0].isParent) {
     return;
   }
+  $.post('removeNode_MySQL.php', { id: treeNode.id, clearChildrenOnly: true });
   zTree.removeChildNodes(treeNode);
 };
 
@@ -640,3 +645,51 @@ function reset() {
   $.fn.zTree.init($("#KnowledgeTree"), setting);
 }
 
+
+//---------------------------
+//Name              : plus
+//Trigger Condiditon: 添加节点时，数据库里应存储的节点编号
+//Function          : 字符串数字加法
+//Create Time       : 2014-07-02
+//Update Time       : 2014-07-02 01:46:15
+//Comment           : 
+//---------------------------
+function plus(n1,n2){
+  n1 = n1.toString(); //转为字符串，因为传入的可能是数字类型，split会错误
+  n2 = n2.toString(); //转为字符串，因为传入的可能是数字类型，split会错误
+  var n1_arr = n1.split(""); //将字符串转为数组  "12345" -> ["1","2","3","4","5"];
+  var n2_arr = n2.split(""); //同上
+  var length = n1_arr.length; //第一个字符串的长度
+  length = n2.length>length?n2.length:length; //两个数字取其中最大的长度
+  while(n1_arr.length<length){ //如果第一个数字没有等于两个数中的最大长度，就一直给前面加0，（n1_arr是数组）
+    n1_arr.unshift("0");
+  }
+  while(n2_arr.length<length){ //如果第二个数字没有等于两个数中的最大长度，就一直给前面加0，（n2_arr是数组）
+    n2_arr.unshift("0");
+  }
+
+  //此时两个数组的长度相同
+  var result = new Array(); //用来保存最后和值的每个位的数字
+
+  var jin = 0; //是否进位
+
+  for(var i=length-1;i>=0;i--){  //从数字最后一位开始向前，每一位相加
+    var x = parseInt(n1_arr[i]);    //代表第一个数字的某一位数字
+    var y = parseInt(n2_arr[i]);  //代表第二个数字的某一位数字
+    var xy = x+y; //两个数字的相同某位相加
+    if(xy+jin<10) { //两个数字相加，并且加进位值（1或者0）的结果小于10，不用进位
+      result[i] = xy+jin; //jin 表示的是上一位相加结果进位标识，所以这一位的结果最后要加jin（0或者1）
+      jin = 0; //因为在if的判断中已经算了加上进位小于10，所以前一位就不用进位，所以修改jin为0
+    }
+    else { //想加结果大于等于10，上一位需要多加1（进位）
+      result[i] = parseInt((xy+jin).toString().substring(1)); //如果结果大于10，这一位只保留相加后的个位数，截取出个位数的值
+      jin = 1; //进位 
+    }
+  }
+  //如果到达第一位后还需要进位，就给数字的最前面添一个"1"
+  if(jin == 1) {
+    result.unshift("1");
+  }
+  alert(n1+"+"+n2+"="+result.join(""));   
+  return result.join("");
+}
