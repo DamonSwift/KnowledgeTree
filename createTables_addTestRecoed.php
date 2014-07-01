@@ -38,23 +38,23 @@
   //若数据库中不存在知识树表或节点表，则创建新表
   //知识树表
   $sql = "CREATE TABLE if not exists $tabKnowTree(
-    TreeName varchar(50) PRIMARY KEY,
-    Domain varchar(50),
+    TreeName   varchar(50) PRIMARY KEY,
+    Domain     varchar(50),
     CreateTime date,
     UpdateTime timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    Comment varchar(1000)
+    Comment    varchar(1000)
   )ENGINE = InnoDB DEFAULT CHARSET = utf8";
   $result = mysql_query($sql, $conn);
 
   //知识点表
   $sql = "CREATE TABLE if not exists $tabKnowNode(
-    TreeName varchar(50),
-    NodeID varchar(120) PRIMARY KEY,
-    ParentID varchar(120),
-    NodeName varchar(50),
+    TreeName    varchar(50),
+    NodeID      varchar(120) PRIMARY KEY,
+    ParentID    varchar(120),
+    NodeName    varchar(50),
     NodeMeaning varchar(200),
-    MeanType int(3),
-    IsParent tinyint(1),
+    MeanType    int(3),
+    IsParent    tinyint(1),
     CONSTRAINT FOREIGN KEY(TreeName) REFERENCES KnowledgeTree(TreeName) ON DELETE CASCADE ON UPDATE CASCADE
   )ENGINE = InnoDB DEFAULT CHARSET = utf8";
   $result = mysql_query($sql, $conn);

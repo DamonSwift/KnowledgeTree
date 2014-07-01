@@ -627,10 +627,16 @@ function reset() {
   asyncForAll = false;
   goAsync = false;
   $("#demoMsg").text("");
-  //后台数据库重置
-  $.post("createTables_addTestRecoed.php", function(data) {
+  //后台数据库重置(同步AJAX)
+  $.ajax({
+    url: 'createTables_addTestRecoed.php',
+    async: false,
+    success: function(data) {
     alert(data);
+    }
   });
   //前台UI重置
+  //setTimeout(function(){$.fn.zTree.init($("#KnowledgeTree"), setting)}, 60);
   $.fn.zTree.init($("#KnowledgeTree"), setting);
 }
+

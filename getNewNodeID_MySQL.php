@@ -1,7 +1,3 @@
-<!--
- * Create Time: 2014-07-01
- * Update Time: 2014-07-01 15:39:34
- -->
 <?php
   //数据库登录信息
   $server = "localhost";
