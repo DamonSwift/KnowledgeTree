@@ -1,3 +1,9 @@
+/*
+ * Create Time: 2014-06-25
+ * Update Time: 2014-07-01 15:38:59
+ */
+
+
 //zTree全部属性设置
 var setting = {
   //全局句柄(不允许初始化或修改)
@@ -212,7 +218,8 @@ var setting = {
 
 var log;
 var className = "dark";
-var newCount  = 1;
+var newTreeCount  = 1;
+var newNodeCount  = 1;
 var demoMsg   = {
   async:"正在进行异步加载，请等一会儿再点击...",
   expandAllOver: "全部展开完毕",
@@ -228,12 +235,12 @@ var goAsync = false;
 //Callbacks
 
 //---------------------------
-//Name: beforeDrag
+//Name              : beforeDrag
 //Trigger Condiditon: zTree event, execute before dragging a node.
-//Function: authorizing drag operation.
-//Create Time: 2014-06-24
-//Update Time: 2014-06-24 11:35:36
-//Comment: 
+//Function          : authorizing drag operation.
+//Create Time       : 2014-06-24
+//Update Time       : 2014-06-24 11:35:36
+//Comment           : 
 //---------------------------
 function beforeDrag(treeId, treeNodes) {
   //允许拖拽操作
@@ -241,12 +248,12 @@ function beforeDrag(treeId, treeNodes) {
 }
 
 //---------------------------
-//Name: beforeRemove
+//Name              : beforeRemove
 //Trigger Condiditon: zTree event, execute before removing a node.
-//Function: 弹出确认对花框，产生并显示log信息
-//Create Time: 2014-06-24
-//Update Time: 2014-06-24 11:35:28
-//Comment: 
+//Function          : 弹出确认对花框，产生并显示log信息
+//Create Time       : 2014-06-24
+//Update Time       : 2014-06-24 11:35:28
+//Comment           : 
 //---------------------------
 function beforeRemove(treeId, treeNode) {
   className = (className === "dark" ? "":"dark");
@@ -257,12 +264,12 @@ function beforeRemove(treeId, treeNode) {
 }
 
 //---------------------------
-//Name: onRemove
+//Name              : onRemove
 //Trigger Condiditon: zTree event, execute on removing a node.
-//Function: 产生并显示log信息
-//Create Time: 2014-06-24
-//Update Time: 2014-06-24 11:41:54
-//Comment: 
+//Function          : 产生并显示log信息
+//Create Time       : 2014-06-24
+//Update Time       : 2014-06-24 11:41:54
+//Comment           : 
 //---------------------------
 function onRemove(e, treeId, treeNode) {
   //产生log信息
@@ -270,32 +277,31 @@ function onRemove(e, treeId, treeNode) {
 }
 
 //---------------------------
-//Name: beforeRename
+//Name              : beforeRename
 //Trigger Condiditon: zTree event, execute brfore renaming a node.
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 2014-06-25 15:33:44
-//Comment: 
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 2014-06-25 15:33:44
+//Comment           : 
 //---------------------------
 function beforeRename(treeId, treeNode, newName) {
   //修改后节点名称为空时提示
   if (newName.length == 0) {
-    alert("节点名称不能为空.");
-    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-    //10毫秒后执行
-    setTimeout(function(){zTree.editName(treeNode)}, 10);
+    var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree");
+    //取消名称修改，还原修改前的名称
+    zTree.cancelEditName();
     return false;
   }
   return true;
 }
 
 //---------------------------
-//Name: beforeAsync
+//Name              : beforeAsync
 //Trigger Condiditon: zTree event, execute before asyncing node data.
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 2014-06-25 15:33:54
-//Comment: 
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 2014-06-25 15:33:54
+//Comment           : 
 //---------------------------
 function beforeAsync() {
   //每次异步加载节点前，计数变量自增
@@ -303,12 +309,12 @@ function beforeAsync() {
 }
 
 //---------------------------
-//Name: onAsyncSuccess
+//Name              : onAsyncSuccess
 //Trigger Condiditon: zTree event, execute on async success.
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 2014-06-25 15:34:02
-//Comment: 
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 2014-06-25 15:34:02
+//Comment           : 
 //---------------------------
 function onAsyncSuccess(event, treeId, treeNode, msg) {
   curAsyncCount--;
@@ -330,12 +336,12 @@ function onAsyncSuccess(event, treeId, treeNode, msg) {
 }
 
 //---------------------------
-//Name: onAsyncError
+//Name              : onAsyncError
 //Trigger Condiditon: zTree event, execute on async error.
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 2014-06-25 17:34:39
-//Comment: 
+//Function          : 标识位置位
+//Create Time       : 2014-06-25
+//Update Time       : 2014-06-25 17:34:39
+//Comment           : 
 //---------------------------
 function onAsyncError(event, treeId, treeNode, XMLHttpRequest, textStatus, errorThrown) {
   curAsyncCount--;
@@ -347,12 +353,12 @@ function onAsyncError(event, treeId, treeNode, XMLHttpRequest, textStatus, error
 }
 
 //---------------------------
-//Name: showLog
+//Name              : showLog
 //Trigger Condiditon: 
-//Function: 显示对应的提示信息
-//Create Time: 2014-06-25
-//Update Time: 2014-06-26 11:26:15
-//Comment: 
+//Function          : 显示对应的提示信息
+//Create Time       : 2014-06-25
+//Update Time       : 2014-06-26 11:26:15
+//Comment           : 
 //---------------------------
 function showLog(str) {
   if (!log) log = $("#log");
@@ -365,12 +371,12 @@ function showLog(str) {
 }
 
 //---------------------------
-//Name: getTime
+//Name              : getTime
 //Trigger Condiditon: 产生log信息时
-//Function: 获取并返回当前的时、分、秒、毫秒
-//Create Time: 2014-06-25
-//Update Time: 2014-06-26 11:26:06
-//Comment: 
+//Function          : 获取并返回当前的时、分、秒、毫秒
+//Create Time       : 2014-06-25
+//Update Time       : 2014-06-26 11:26:06
+//Comment           : 
 //---------------------------
 function getTime() {
   var now = new Date(),
@@ -383,99 +389,126 @@ function getTime() {
 }
 
 //---------------------------
-//Name: add
-//Trigger Condiditon: 点击添加节点按钮
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 2014-06-26 11:26:01
-//Comment: 
+//Name              : addKnowledgeTree
+//Trigger Condiditon: 点击“添加知识树”按钮
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 2014-06-26 11:26:01
+//Comment           : 
 //---------------------------
-function add(event) {
-  var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-  //event为事件对象的句柄，从其data属性中可以取出传递来的数据
-  isParent  = event.data.isParent,
-  nodes     = zTree.getSelectedNodes(),
-  //排除多选带来的干扰：只对选中的第一个节点起作用
-  treeNode  = nodes[0];
-  if(treeNode) {
-    treeNode = zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, isParent:isParent, name:"new node" + (newCount++)});
-  } 
-  else {
-    treeNode = zTree.addNodes(null, {id:(100 + newCount), pId:0, isParent:isParent, name:"new node" + (newCount++)});
+function addKnowledgeTree(event) {
+  //取得zTree对象
+  var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree");
+  //var str = prompt("知识树名称","NewKnowledgeTree" + newCount);
+  //节点数据
+  var newTree = {
+    id: "NewKnowledgeTree" + newTreeCount,
+    pId: "0",
+    isParent: "true",
+    name: "NewKnowledgeTree" + (newTreeCount++)
+  };
+  var treeNode;
+  //添加根节点并修改名称
+  treeNode = zTree.addNodes(null, newTree);
+  zTree.editName(treeNode[0]);
+  treeNode = zTree.getSelectedNodes();
+  treeNode = treeNode[0];
+  newTree.id = treeNode.name;
+  newTree.name = treeNode.name;
+  //写入数据库，KnowledgeTree表格
+  $.post("saveKnowTree_MySQL.php", newTree);
+};
+
+//---------------------------
+//Name              : addKnowledgeNode
+//Trigger Condiditon: 点击“添加子知识点”按钮
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 2014-06-26 11:26:01
+//Comment           : 
+//---------------------------
+function addKnowledgeNode(event) {
+  var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree");
+  var nodes = zTree.getSelectedNodes();
+  var treeNode  = nodes[0];
+  //若未选中节点，退出
+  if(!treeNode) { 
+    return; 
   }
-  if(treeNode) {
-    zTree.editName(treeNode[0]);
-  } 
-  else {
-    alert("叶子节点被锁定，无法增加子节点");
+  else { //若选中了某个节点，则添加当前节点的子结点，并写入数据库
+    $.post('getNewNodeID_MySQL.php', { id: treeNode.id, });
+    var newNode = {
+      id: "",
+      pId: treeNode.id,
+      isParent: "false",
+      name: "NewKnowledgeNode" + (newTreeCount++)
+    };
+    treeNode = zTree.addNodes(treeNode, newNode);
+    zTree.editName(treeNode[0]);    
   }
 };
 
 //---------------------------
-//Name: edit
-//Trigger Condiditon: 点击编辑节点按钮
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 
-//Comment: 
+//Name              : edit
+//Trigger Condiditon: 点击“编辑知识点”按钮
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 2014-07-01 11:09:07
+//Comment           : 
 //---------------------------
 function edit() {
-  var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+  var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree"),
   nodes     = zTree.getSelectedNodes(),
   treeNode  = nodes[0];
   if (nodes.length == 0) {
-    alert("请先选择一个节点");
     return;
   }
   zTree.editName(treeNode);
 };
 
 //---------------------------
-//Name: 
-//Trigger Condiditon: 
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 
-//Comment: 
+//Name              : remove
+//Trigger Condiditon: 点击“删除知识点”按钮
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 
+//Comment           : 
 //---------------------------
 function remove(e) {
-  var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-  nodes = zTree.getSelectedNodes(),
-  treeNode = nodes[0];
+  var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree"),
+  nodes     = zTree.getSelectedNodes(),
+  treeNode  = nodes[0];
   if (nodes.length == 0) {
-    alert("请先选择一个节点");
-  return;
+    return;
   }
-  var callbackFlag = $("#callbackTrigger").attr("checked");
   zTree.removeNode(treeNode, callbackFlag);
 };
 
 //---------------------------
-//Name: 
-//Trigger Condiditon: 
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 
-//Comment: 
+//Name              : clearChildren
+//Trigger Condiditon: 点击“清空子知识点”按钮
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 
+//Comment           : 
 //---------------------------
 function clearChildren(e) {
-  var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-  nodes = zTree.getSelectedNodes(),
-  treeNode = nodes[0];
+  var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree"),
+  nodes     = zTree.getSelectedNodes(),
+  treeNode  = nodes[0];
   if (nodes.length == 0 || !nodes[0].isParent) {
-    alert("请先选择一个父节点");
     return;
   }
   zTree.removeChildNodes(treeNode);
 };
 
 //---------------------------
-//Name: 
-//Trigger Condiditon: 
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 
-//Comment: 
+//Name              : check
+//Trigger Condiditon: 异步加载节点之前
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 
+//Comment           : 
 //---------------------------
 function check() {
   if (curAsyncCount > 0) {
@@ -486,18 +519,18 @@ function check() {
 }
 
 //---------------------------
-//Name: 
-//Trigger Condiditon: 
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 
-//Comment: 
+//Name              : expandNodes
+//Trigger Condiditon: expandAll
+//Function          : 递归，逐层展开父节点
+//Create Time       : 2014-06-25
+//Update Time       : 2014-06-30 11:52:07
+//Comment           : 
 //---------------------------
 function expandNodes(nodes) {
   if (!nodes) return;
   curStatus = "expand";
-  var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-  for (var i=0, l=nodes.length; i<l; i++) {
+  var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree");
+  for (var i = 0, l = nodes.length; i < l; i++) {
     zTree.expandNode(nodes[i], true, false, false);
     if (nodes[i].isParent && nodes[i].zAsync) {
       expandNodes(nodes[i].children);
@@ -508,18 +541,18 @@ function expandNodes(nodes) {
 }
 
 //---------------------------
-//Name: 
-//Trigger Condiditon: 
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 
-//Comment: 
+//Name              : expandAll
+//Trigger Condiditon: 点击“全部展开”按钮时
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 
+//Comment           : 
 //---------------------------
 function expandAll() {
   if (!check()) {
     return;
   }
-  var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+  var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree");
   if (asyncForAll) {
     $("#demoMsg").text(demoMsg.expandAll);
     zTree.expandAll(true);
@@ -534,18 +567,18 @@ function expandAll() {
 }
 
 //---------------------------
-//Name: 
-//Trigger Condiditon: 
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 
-//Comment: 
+//Name              : asyncAll
+//Trigger Condiditon: 点击“后台全部加载”时
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 
+//Comment           : 
 //---------------------------
 function asyncAll() {
   if (!check()) {
     return;
   }
-  var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+  var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree");
   if (asyncForAll) {
     $("#demoMsg").text(demoMsg.asyncAll);
   } else {
@@ -558,18 +591,18 @@ function asyncAll() {
 }
 
 //---------------------------
-//Name: 
-//Trigger Condiditon: 
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 
-//Comment: 
+//Name              : asyncNodes
+//Trigger Condiditon: 在asyncAll函数中调用
+//Function          : 递归实现异步重新加载节点
+//Create Time       : 2014-06-25
+//Update Time       : 
+//Comment           : 
 //---------------------------
 function asyncNodes(nodes) {
   if (!nodes) return;
   curStatus = "async";
-  var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-  for (var i=0, l=nodes.length; i<l; i++) {
+  var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree");
+  for (var i = 0, l = nodes.length; i < l; i++) {
     if (nodes[i].isParent && nodes[i].zAsync) {
       asyncNodes(nodes[i].children);
     } else {
@@ -580,12 +613,12 @@ function asyncNodes(nodes) {
 }
 
 //---------------------------
-//Name: 
-//Trigger Condiditon: 
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 
-//Comment: 
+//Name              : reset
+//Trigger Condiditon: 点击“Reset zTree”按钮时
+//Function          : 后台数据库和树结构UI的重置
+//Create Time       : 2014-06-25
+//Update Time       : 2014-06-30 11:23:10
+//Comment           : 
 //---------------------------
 function reset() {
   if (!check()) {
@@ -598,25 +631,6 @@ function reset() {
   $.post("createTables_addTestRecoed.php", function(data) {
     alert(data);
   });
-
   //前台UI重置
-  $.fn.zTree.init($("#treeDemo"), setting);
+  $.fn.zTree.init($("#KnowledgeTree"), setting);
 }
-
-
-
-//----------
-//   TEST 
-//---------- 
-//---------------------------
-//Name: 
-//Trigger Condiditon: 
-//Function: 
-//Create Time: 2014-06-25
-//Update Time: 
-//Comment: 
-//---------------------------
-//在异步加载节点完成后显示 AJAX 提取到的信息，用于测试
-// function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
-//     alert(msg);
-// };
