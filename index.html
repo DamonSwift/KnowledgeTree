@@ -1,7 +1,12 @@
+<!--
+ * Create Time: 2014-06-01
+ * Update Time: 2014-07-01 15:40:23
+ -->
+
 <!DOCTYPE html>
-<HTML>
+<HTML lang="zh-CN">
 <HEAD>
-  <TITLE> KonwLedgeTree Test v0.3</TITLE>
+  <TITLE> KnowledgeTree Test v0.3</TITLE>
   <!--网页字符编码-->
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <!--CSS-->
@@ -18,9 +23,9 @@
   <!--入口函数-->
   <SCRIPT type="text/javascript">
     $(document).ready(function(){
-      $.fn.zTree.init($("#treeDemo"), setting);
-      $("#addParent").bind("click", {isParent:true}, add);
-      $("#addLeaf").bind("click", {isParent:false}, add);
+      $.fn.zTree.init($("#KnowledgeTree"), setting);
+      $("#addParent").bind("click", {isParent:true}, addKnowledgeTree);
+      $("#addLeaf").bind("click", {isParent:false}, addKnowledgeNode);
       $("#edit").bind("click", edit);
       $("#remove").bind("click", remove);
       $("#clearChildren").bind("click", clearChildren);
@@ -34,49 +39,39 @@
 <BODY>
 <div class="content_wrap">
   <!--左侧菜单栏-->
-  <div class="zTreeDemoBackground left">
-    <ul id="treeDemo" class="ztree"></ul>
+  <div class="left">
+    <ul class="ztree" id="KnowledgeTree"></ul>
   </div>
   <!--右侧显示-->
   <div class="right">
-    <h1>Konwledge Tree Test v0.3</h1>
-    <p>
-      <input type="checkbox" id="callbackTrigger" checked /> removeNode 方法是否触发 callback<br/>
-      [ <a id="addParent" href="#" title="添加知识树" onclick="return false;">添加知识树</a> ]<br/>
-      [ <a id="addLeaf" href="#" title="添加子知识点" onclick="return false;">添加子知识点</a> ]<br/>
-      [ <a id="edit" href="#" title="编辑知识点" onclick="return false;">编辑知识点</a> ]<br/>
-      [ <a id="remove" href="#" title="删除知识点" onclick="return false;">删除知识点</a> ]<br/>
-      [ <a id="clearChildren" href="#" title="清空子知识点" onclick="return false;">清空子知识点</a> ]<br/>
-      [ <a id="expandAllBtn" href="#" onclick="return false;">全部展开</a> ]<br/>
-      [ <a id="asyncAllBtn" href="#" onclick="return false;">后台全部加载</a> ]<br/>
-      [ <a id="resetBtn" href="#" onclick="return false;">Reset zTree</a> ]<br/>
-    </p>
-    <p>
-      
-
-      <!--addNode待测试-->
-
-    <!--       
-      <form action="addNode.php" method="post">
-      知识点名称: &nbsp;<input type="text" name="NodeName" /><br/>
-      意义: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="NodeMeaning" /><br/>
-      类型: <input type="text" name="MeanType" /><br/> 
-      <input type="submit"/> 
-      </form>
-    -->
-    </p>
-    <p>
-      remove log:<br/>
-      <ul id="log" class="log"></ul>
-      <ul id="demoMsg" class="highlight_red"></ul>
-    </p>
+    <!--按钮-->
+    <div class="btns">
+      <p>
+        <input id="callbackTrigger" type="checkbox" checked /> removeNode 方法是否触发 callback<br/>
+        [ <a id="addParent" href="#" title="添加知识树" onclick="return false;">添加知识树</a> ]<br/>
+        [ <a id="addLeaf" href="#" title="添加子知识点" onclick="return false;">添加子知识点</a> ]<br/>
+        [ <a id="edit" href="#" title="编辑知识点" onclick="return false;">编辑知识点</a> ]<br/>
+        [ <a id="remove" href="#" title="删除知识点" onclick="return false;">删除知识点</a> ]<br/>
+        [ <a id="clearChildren" href="#" title="清空子知识点" onclick="return false;">清空子知识点</a> ]<br/>
+        [ <a id="expandAllBtn" href="#" onclick="return false;">全部展开</a> ]<br/>
+        [ <a id="asyncAllBtn" href="#" onclick="return false;">后台全部加载</a> ]<br/>
+        [ <a id="resetBtn" href="#" onclick="return false;">Reset zTree</a> ]<br/>
+      </p>
+      <p>
+        remove log:<br/>
+        <ul class="log" id="log"></ul>
+        <ul class="highlight_red" id="demoMsg"></ul>
+      </p>      
+    </div>
     
-    <!--
-    <button>添加知识树</button>
-    <button>添加知识点</button>
-    <button>添加子知识点</button>
-    <button>添加知识树</button>  
-    -->
+    <!--属性-->
+    <div class="proporities">
+<!--       <ul class="ztree">
+        <li></li>
+        <li></li>
+      </ul> -->
+    </div>
+
   </div>
 </div>
 </BODY>
