@@ -20,7 +20,7 @@
   // $clearChildrenFlag = $_POST["clearChildrenOnly"];
   $removeID = "0000";
   $clearChildrenFlag = false;
-  
+
   if($clearChildrenFlag) { //清除子结点模式
     $sql = "UPDATE $tabKnowNode SET isParent = 'false' WHERE NodeID = '$removeID'";
     $result = mysql_query($sql, $conn);
@@ -41,5 +41,10 @@
   }
   $sql = "DELETE FROM $tabKnowTree WHERE TreeName = '$removeID'";
   $result = mysql_query($sql, $conn);
+
+  //递归实现层级节点的删除
+  function removeNode() {
+    
+  }
 
 ?>

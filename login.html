@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<HTML lang="zh-CN">
+<HEAD>
+  <TITLE>Login</TITLE>
+  <style type="text/css">
+    body {
+      margin-top: 200px;
+      font: 15px/20px Arial, Helvetica, simsun, sans-serif;
+      text-align: center;
+    }
+    #submit {
+      width: 100px;
+      height: 30px;
+    }
+  </style>
+</HEAD>
+  <!--网页字符编码-->
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<BODY >
+  <div id="login_form" align="center">
+    <form action="login.php" method="post">
+      <table>
+        <tr>
+          <th colspan="2">Login</th>
+        </tr>
+        <tr>
+          <td align="right">Server IP</td>
+          <td><input name="server" type="text" /></td>
+        </tr>
+        <tr>
+          <td align="right">User Name</td>
+          <td><input name="user" type="text" /></td>
+        </tr>
+        <tr>
+          <td align="right">Password</td>
+          <td><input name="password" type="password" /></td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center">
+            <input id="submit" type="submit" value="登录" />&nbsp;&nbsp;
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</BODY>
+</HTML>

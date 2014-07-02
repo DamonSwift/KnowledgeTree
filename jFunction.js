@@ -296,6 +296,26 @@ function beforeRename(treeId, treeNode, newName) {
 }
 
 //---------------------------
+//Name              : onRename
+//Trigger Condiditon: zTree event, execute brfore renaming a node.
+//Function          : 
+//Create Time       : 2014-06-25
+//Update Time       : 2014-06-25 15:33:44
+//Comment           : 
+//---------------------------
+function onRename(treeId, treeNode, newName) {
+  //修改后节点名称为空时提示
+  if (newName.length == 0) {
+    var zTree = $.fn.zTree.getZTreeObj("KnowledgeTree");
+    //取消名称修改，还原修改前的名称
+    zTree.cancelEditName();
+    return false;
+  }
+  return true;
+}
+
+
+//---------------------------
 //Name              : beforeAsync
 //Trigger Condiditon: zTree event, execute before asyncing node data.
 //Function          : 
@@ -410,11 +430,13 @@ function addKnowledgeTree(event) {
   var treeNode;
   //添加根节点并修改名称
   treeNode = zTree.addNodes(null, newTree);
-  zTree.editName(treeNode[0]);
-  treeNode = zTree.getSelectedNodes();
-  treeNode = treeNode[0];
-  newTree.id = treeNode.name;
-  newTree.name = treeNode.name;
+  //
+  // zTree.editName(treeNode[0]);
+  // treeNode = zTree.getSelectedNodes();
+  // treeNode = treeNode[0];
+  // newTree.id = treeNode.name;
+  // newTree.name = treeNode.name;
+  
   //写入数据库，KnowledgeTree表格
   $.post("setNewKnowTree_MySQL.php", newTree);
 };
@@ -436,13 +458,15 @@ function addKnowledgeNode(event) {
     return; 
   }
   else { //若选中了某个节点，则添加当前节点的子结点，并写入数据库
-    $.post('getNewNodeID_MySQL.php', { id: treeNode.id, });
-    var newNode = {
-      id: "",
-      pId: treeNode.id,
-      isParent: "false",
-      name: "NewKnowledgeNode" + (newTreeCount++)
-    };
+    $.post('getNewNodeID_MySQL.php', { id: treeNode.id, }, function(data){
+      var newNode = {
+        id: "",
+        pId: treeNode.id,
+        isParent: "false",
+        name: "NewKnowledgeNode" + (newTreeCount++)
+      };
+    });
+
     treeNode = zTree.addNodes(treeNode, newNode);
     zTree.editName(treeNode[0]);
     // $.post('setNewKnowNode_MySQL.php', param1: 'value1', function(data, textStatus, xhr) {
@@ -654,7 +678,7 @@ function reset() {
 //Update Time       : 2014-07-02 01:46:15
 //Comment           : 
 //---------------------------
-function plus(n1,n2){
+function plus(n1, n2) {
   n1 = n1.toString(); //转为字符串，因为传入的可能是数字类型，split会错误
   n2 = n2.toString(); //转为字符串，因为传入的可能是数字类型，split会错误
   var n1_arr = n1.split(""); //将字符串转为数组  "12345" -> ["1","2","3","4","5"];
