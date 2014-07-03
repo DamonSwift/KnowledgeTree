@@ -10,15 +10,15 @@
   <!--网页字符编码-->
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <!--CSS-->
-  <link rel="stylesheet" href="zTreeStyle/demo.css" type="text/css">
-  <link rel="stylesheet" href="zTreeStyle/zTreeStyle.css" type="text/css">
+  <link rel="stylesheet" href="CSS/index.css" type="text/css">
+  <link rel="stylesheet" href="CSS/zTreeStyle.css" type="text/css">
   <!--jQuery与zTree-->
   <script type="text/javascript" src="JS/jquery-1.11.1.js"></script>
   <script type="text/javascript" src="JS/jquery.ztree.core-3.5.js"></script>
   <script type="text/javascript" src="JS/jquery.ztree.excheck-3.5.js"></script>
   <script type="text/javascript" src="JS/jquery.ztree.exedit-3.5.js"></script>
   <!--zTree配置与回调函数-->
-  <script type="text/javascript" src="jFunction.js"></script>
+  <script type="text/javascript" src="JS/KnowledgeTree.js"></script>
 
   <!--入口函数-->
   <SCRIPT type="text/javascript">
@@ -37,13 +37,18 @@
 </HEAD>
 
 <BODY>
+<!--页眉-->
+<div class="header">
+  
+</div>
+
 <div class="content_wrap">
-  <!--左侧菜单栏-->
-  <div class="left">
+  <!--导航栏-->
+  <div class="nav">
     <ul class="ztree" id="KnowledgeTree"></ul>
   </div>
-  <!--右侧显示-->
-  <div class="right">
+  <!--页面主体-->
+  <div class="main_body">
     <!--按钮-->
     <div class="btns">
       <p>
@@ -62,17 +67,18 @@
         <ul class="log" id="log"></ul>
         <ul class="highlight_red" id="demoMsg"></ul>
       </p>      
-    </div>
-    
+    </div>  
     <!--属性-->
     <div class="proporities">
-<!--       <ul class="ztree">
-        <li></li>
-        <li></li>
-      </ul> -->
+      <ul class="ztree">
+      </ul>
     </div>
-
   </div>
+</div>
+
+<!--页脚-->
+<div class="footer">
+  
 </div>
 </BODY>
 </HTML>
